@@ -1,6 +1,7 @@
 import pandas as pd
+from src.config import DADOS_PROCESSADOS
 
-arquivo = "data/processed/futebol_limpo.csv"
+arquivo = DADOS_PROCESSADOS / "futebol_limpo.csv"
 
 df = pd.read_csv(arquivo)
 
@@ -223,4 +224,25 @@ print(
     caso[
         ["Date", "HomeTeam", "AwayTeam", "HS"]
     ].to_string(index=False)
+)
+
+colunas_numericas = [
+    "HTHG", "HTAG",
+    "HS", "AS",
+    "HST", "AST",
+    "HF", "AF",
+    "HC", "AC",
+    "HY", "AY",
+    "HR", "AR"
+]
+
+df_experimento = df[
+    colunas_numericas
+].dropna()
+
+print("Base original:", df.shape)
+
+print(
+    "Base completa para experimento:",
+    df_experimento.shape
 )

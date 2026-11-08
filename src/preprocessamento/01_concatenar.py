@@ -1,13 +1,14 @@
 from pathlib import Path
 import pandas as pd
+from src.config import DADOS_BRUTOS, DADOS_PROCESSADOS
 
 
 # =========================
 # CAMINHOS DO PROJETO
 # =========================
 
-pasta_dados = Path("data/raw")
-pasta_saida = Path("data/processed")
+pasta_dados = DADOS_BRUTOS
+pasta_saida = DADOS_PROCESSADOS
 
 # Cria data/processed caso ainda não exista
 pasta_saida.mkdir(parents=True, exist_ok=True)

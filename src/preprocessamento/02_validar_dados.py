@@ -1,11 +1,12 @@
 import pandas as pd
+from src.config import DADOS_PROCESSADOS
 
 
 # ============================================================
 # 1. CARREGAMENTO DA BASE CONSOLIDADA
 # ============================================================
 
-arquivo = "data/processed/futebol_consolidado.csv"
+arquivo = DADOS_PROCESSADOS / "futebol_consolidado.csv"
 
 df = pd.read_csv(arquivo)
 
@@ -558,7 +559,7 @@ print(
 # 16. SALVAMENTO DA BASE LIMPA
 # ============================================================
 
-arquivo_saida = "data/processed/futebol_limpo.csv"
+arquivo_saida = DADOS_PROCESSADOS / "futebol_limpo.csv"
 
 df_limpo.to_csv(
     arquivo_saida,

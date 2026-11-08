@@ -1,12 +1,11 @@
+# ambiente
 .venv/
 __pycache__/
 *.pyc
 
-data/raw/
+# bases geradas pelo pipeline (grandes; recriadas a partir de data/raw)
 data/processed/
 
+# editor / sistema
 .vscode/
 .DS_Store
-
-
-
