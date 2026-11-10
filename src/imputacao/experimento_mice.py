@@ -4,7 +4,7 @@ import time
 
 from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
-from sklearn.model_selection import KFold
+from src.imputacao.protocolo import KFOLD, N_FOLDS
 from sklearn.metrics import (
     mean_absolute_error,
     mean_squared_error,
@@ -69,14 +69,10 @@ percentuais = [
 
 
 # ============================================================
-# 5. CONFIGURAR 5-FOLD
+# 5. CONFIGURAR K-FOLD
 # ============================================================
 
-kfold = KFold(
-    n_splits=5,
-    shuffle=True,
-    random_state=42
-)
+kfold = KFOLD  # mesma divisão para todos os métodos (src/imputacao/protocolo.py)
 
 
 # Guardaremos todos os resultados aqui
@@ -577,7 +573,7 @@ resumo = (
 
 
 print(
-    "\n===== RESUMO MICE + 5-FOLD ====="
+    f"\n===== RESUMO MICE + {N_FOLDS}-FOLD ====="
 )
 
 print(
@@ -641,5 +637,5 @@ resumo_r2.to_csv(
 
 
 print(
-    "\nExperimento MICE + 5-Fold finalizado."
+    f"\nExperimento MICE + {N_FOLDS}-Fold finalizado."
 )

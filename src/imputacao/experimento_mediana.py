@@ -7,7 +7,7 @@ import time
 from sklearn.impute import SimpleImputer
 
 from src.imputacao.protocolo import (
-    KFOLD, PERCENTUAIS, calcular_metricas, carregar_base, gerar_mascara,
+    KFOLD, N_FOLDS, PERCENTUAIS, calcular_metricas, carregar_base, gerar_mascara,
     salvar_resultados,
 )
 
@@ -36,5 +36,5 @@ for fold, (idx_treino, idx_teste) in enumerate(KFOLD.split(X), start=1):
         print(f"Mediana | fold {fold} | {percentual:.0%} | MAE {linhas[0]['MAE']:.4f}")
 
 resumo = salvar_resultados(resultados, "mediana")
-print("\n===== RESUMO MEDIANA + 5-FOLD =====")
+print(f"\n===== RESUMO MEDIANA + {N_FOLDS}-FOLD =====")
 print(resumo)

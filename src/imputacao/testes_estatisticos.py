@@ -1,9 +1,9 @@
 """Testes estatísticos da comparação de imputação.
 
 Unidade de comparação (bloco): uma variável em um fold. Com 14 variáveis e
-5 folds são 70 blocos pareados por método e percentual, em vez de 5. Com só
-5 folds o menor p possível do Wilcoxon bicaudal é 0,0625, então nenhuma
-diferença conseguiria ser significativa a 0,05 nem a 0,01.
+10 folds são 140 blocos pareados por método e percentual. Comparar só o erro
+geral de cada fold daria 10 pares; com 5 folds seriam 5, e o menor p possível
+do Wilcoxon bicaudal seria 0,0625 (nenhuma diferença seria significativa).
 
 Testes, para cada métrica (MAE, RMSE, R²) e cada percentual de ausência:
 
@@ -28,7 +28,7 @@ Os resultados saem para α = 0,05 e α = 0,01, com tamanho de efeito:
 Limitação: blocos do mesmo fold usam os mesmos dados, então não são
 totalmente independentes, e os p-valores tendem a ser otimistas. Por isso
 os tamanhos de efeito devem ser lidos junto com os p-valores. A solução
-completa é repetir a validação cruzada (por exemplo, 10 x 5 folds).
+completa é repetir a validação cruzada (por exemplo, 5 x 10 folds).
 
 Entrada: results/imputacao/resultados_<metodo>_kfold.csv
 Saídas:  results/imputacao/friedman_kfold.csv

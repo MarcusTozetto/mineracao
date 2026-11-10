@@ -43,10 +43,14 @@ Grupo 4 — contexto dos times (só jogos anteriores, sem vazar o resultado)
     dif_forma           forma_casa - forma_fora
     ppj_casa, ppj_fora  pontos por jogo acumulados na temporada até o jogo
     saldo_casa, saldo_fora  saldo de gols por jogo nos últimos 5 jogos
+    posicao_casa, posicao_fora  posição na tabela da liga ANTES do jogo
+                        (pontos, depois saldo, depois gols marcados)
+    posicao_rel_casa, posicao_rel_fora  posição / nº de times (0 = líder, 1 = último)
+    dif_posicao         posicao_casa - posicao_fora (< 0: mandante mais bem colocado)
     progresso           fração da temporada já disputada (0 a 1)
     reta_final          1 nos últimos 15% da temporada
     Nos primeiros jogos de cada time na temporada (menos de 3 anteriores) a
-    forma fica NaN.
+    forma e a posição ficam NaN: a tabela ainda não diz nada.
 
 Entrada: data/processed/futebol_probabilidades.csv
 Saída:   data/processed/futebol_atributos.csv
@@ -158,6 +162,51 @@ df["indice_disciplina"] = (df["HY"] + df["AY"]) + 2.5 * (df["HR"] + df["AR"])
 # ------------------------------------------------------------------
 JANELA, MINIMO = 5, 3
 
+
+def posicoes_na_tabela(df):
+    """Posição de cada time na tabela imediatamente ANTES de cada jogo.
+
+    Para cada liga e temporada, acumula pontos, saldo e gols de cada time data a
+    data e ranqueia os times com o estado do dia anterior (jogos do mesmo dia
+    não contam). Critério: pontos, depois saldo de gols, depois gols marcados.
+    Times empatados em tudo recebem a mesma posição (a melhor).
+
+    Retorna um DataFrame indexado por id_jogo com posicao_casa, posicao_fora e
+    n_times.
+    """
+    saida = []
+    for (_, _), jogos in df.groupby(["Div", "Season"], sort=False):
+        pontos_c = np.select([jogos["FTR"].eq("H"), jogos["FTR"].eq("D")], [3, 1], 0)
+        pontos_f = np.select([jogos["FTR"].eq("A"), jogos["FTR"].eq("D")], [3, 1], 0)
+        longo = pd.concat([
+            pd.DataFrame({"Date": jogos["Date"], "time": jogos["HomeTeam"],
+                          "pontos": pontos_c, "saldo": jogos["FTHG"] - jogos["FTAG"],
+                          "gols": jogos["FTHG"]}),
+            pd.DataFrame({"Date": jogos["Date"], "time": jogos["AwayTeam"],
+                          "pontos": pontos_f, "saldo": jogos["FTAG"] - jogos["FTHG"],
+                          "gols": jogos["FTAG"]}),
+        ])
+        # totais acumulados ao FIM de cada data, uma coluna por time
+        por_dia = longo.groupby(["Date", "time"])[["pontos", "saldo", "gols"]].sum()
+        acumulado = {c: por_dia[c].unstack(fill_value=0).sort_index().cumsum()
+                     for c in ["pontos", "saldo", "gols"]}
+        # estado ANTES de cada data = acumulado da data anterior
+        antes = {c: t.shift(1, fill_value=0) for c, t in acumulado.items()}
+        # chave única de ordenação: pontos > saldo > gols
+        chave = antes["pontos"] * 1e6 + (antes["saldo"] + 1000) * 1e3 + antes["gols"]
+        posicao = chave.rank(axis=1, ascending=False, method="min")
+
+        posicao = posicao.stack()  # índice (data, time)
+        datas = jogos["Date"].to_numpy()
+        saida.append(pd.DataFrame({
+            "id_jogo": jogos["id_jogo"].to_numpy(),
+            "posicao_casa": posicao.reindex(list(zip(datas, jogos["HomeTeam"]))).to_numpy(),
+            "posicao_fora": posicao.reindex(list(zip(datas, jogos["AwayTeam"]))).to_numpy(),
+            "n_times": acumulado["pontos"].shape[1],
+        }))
+    return pd.concat(saida).set_index("id_jogo")
+
+
 df["Date"] = pd.to_datetime(df["Date"])
 df = df.sort_values(["Div", "Season", "Date", "HomeTeam"]).reset_index(drop=True)
 df["id_jogo"] = np.arange(len(df))
@@ -205,6 +254,17 @@ for lado in ["casa", "fora"]:
     df[f"progresso_{lado}"] = df["id_jogo"].map(parte["progresso"])
 
 df["dif_forma"] = df["forma_casa"] - df["forma_fora"]
+
+tabela = posicoes_na_tabela(df)
+jogos_anteriores = {lado: jogos_time[jogos_time["lado"] == lado].set_index("id_jogo")["n_jogo"] - 1
+                    for lado in ["casa", "fora"]}
+for lado in ["casa", "fora"]:
+    posicao = df["id_jogo"].map(tabela[f"posicao_{lado}"])
+    # com menos de MINIMO jogos a tabela ainda não diz nada
+    posicao = posicao.where(df["id_jogo"].map(jogos_anteriores[lado]) >= MINIMO)
+    df[f"posicao_{lado}"] = posicao
+    df[f"posicao_rel_{lado}"] = (posicao - 1) / (df["id_jogo"].map(tabela["n_times"]) - 1)
+df["dif_posicao"] = df["posicao_casa"] - df["posicao_fora"]
 df["progresso"] = df[["progresso_casa", "progresso_fora"]].mean(axis=1)
 df["reta_final"] = (df["progresso"] >= 0.85).astype(int)
 df = df.drop(columns=["progresso_casa", "progresso_fora", "id_jogo"])
@@ -220,7 +280,8 @@ ATRIBUTOS = [
     "total_faltas", "total_cartoes", "total_vermelhos", "dif_cartoes",
     "indice_disciplina",
     "forma_casa", "forma_fora", "dif_forma", "ppj_casa", "ppj_fora",
-    "saldo_casa", "saldo_fora", "progresso", "reta_final",
+    "saldo_casa", "saldo_fora", "posicao_casa", "posicao_fora",
+    "posicao_rel_casa", "posicao_rel_fora", "dif_posicao", "progresso", "reta_final",
 ]
 df[ATRIBUTOS] = df[ATRIBUTOS].round(CASAS_DECIMAIS)
 

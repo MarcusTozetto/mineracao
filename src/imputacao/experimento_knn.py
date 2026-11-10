@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import time
 
-from sklearn.model_selection import KFold
+from src.imputacao.protocolo import KFOLD, N_FOLDS
 from sklearn.impute import KNNImputer
 from sklearn.metrics import (
     mean_absolute_error,
@@ -61,11 +61,7 @@ percentuais = [
 ]
 
 
-kfold = KFold(
-    n_splits=5,
-    shuffle=True,
-    random_state=42
-)
+kfold = KFOLD  # mesma divisão para todos os métodos (src/imputacao/protocolo.py)
 
 
 resultados = []
@@ -527,7 +523,7 @@ resumo = (
 
 
 print(
-    "\n===== RESUMO KNN + 5-FOLD ====="
+    f"\n===== RESUMO KNN + {N_FOLDS}-FOLD ====="
 )
 
 print(
@@ -599,5 +595,5 @@ resumo_r2.to_csv(
 
 
 print(
-    "\nExperimento KNN + 5-Fold finalizado."
+    f"\nExperimento KNN + {N_FOLDS}-Fold finalizado."
 )

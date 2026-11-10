@@ -24,7 +24,9 @@ COLUNAS = [
 
 PERCENTUAIS = [0.10, 0.20, 0.30, 0.40]
 
-KFOLD = KFold(n_splits=5, shuffle=True, random_state=42)
+# número de folds da validação cruzada, usado por TODOS os métodos
+N_FOLDS = 10
+KFOLD = KFold(n_splits=N_FOLDS, shuffle=True, random_state=42)
 
 
 def carregar_base():
