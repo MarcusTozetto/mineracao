@@ -35,6 +35,7 @@ ETAPAS = {
         "src.atributos.probabilidades",
         "src.atributos.engenharia",
         "src.atributos.matriz",
+        "src.atributos.base_completa",
     ],
     # detecção de anomalias — os módulos entram aqui conforme forem criados
     "deteccao": [],

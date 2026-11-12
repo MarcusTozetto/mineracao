@@ -1,0 +1,109 @@
+bloco,coluna,descricao,preenchidos_pct
+1. Identificação,Div,"Código da liga (ex.: E0 = Premier League, SP1 = La Liga)",100.0
+1. Identificação,Season,Temporada (ex.: 2015_16),100.0
+1. Identificação,Date,Data da partida,100.0
+1. Identificação,HomeTeam,Mandante,100.0
+1. Identificação,AwayTeam,Visitante,100.0
+2. Resultado,FTHG,Gols do mandante no jogo,100.0
+2. Resultado,FTAG,Gols do visitante no jogo,100.0
+2. Resultado,FTR,"Resultado final (H = mandante, D = empate, A = visitante)",100.0
+2. Resultado,HTHG,Gols do mandante no 1º tempo,100.0
+2. Resultado,HTAG,Gols do visitante no 1º tempo,100.0
+2. Resultado,HTR,"Resultado no intervalo (H, D, A)",100.0
+3. Estatísticas do jogo,HS,Finalizações do mandante,100.0
+3. Estatísticas do jogo,AS,Finalizações do visitante,100.0
+3. Estatísticas do jogo,HST,Finalizações no alvo do mandante,100.0
+3. Estatísticas do jogo,AST,Finalizações no alvo do visitante,100.0
+3. Estatísticas do jogo,HF,Faltas cometidas pelo mandante,100.0
+3. Estatísticas do jogo,AF,Faltas cometidas pelo visitante,100.0
+3. Estatísticas do jogo,HC,Escanteios do mandante,100.0
+3. Estatísticas do jogo,AC,Escanteios do visitante,100.0
+3. Estatísticas do jogo,HY,Amarelos do mandante,100.0
+3. Estatísticas do jogo,AY,Amarelos do visitante,100.0
+3. Estatísticas do jogo,HR,Vermelhos do mandante,100.0
+3. Estatísticas do jogo,AR,Vermelhos do visitante,100.0
+3. Estatísticas do jogo,n_imputados,Quantas das 14 estatísticas foram preenchidas pelo MICE,100.0
+3. Estatísticas do jogo,imputado,True se alguma estatística foi imputada,100.0
+4. Odds (média do mercado),odd_casa,Odd média de vitória do mandante,100.0
+4. Odds (média do mercado),odd_empate,Odd média de empate,100.0
+4. Odds (média do mercado),odd_fora,Odd média de vitória do visitante,100.0
+4. Odds (média do mercado),odd_max_casa,Maior odd do mercado para o mandante,100.0
+4. Odds (média do mercado),odd_max_empate,Maior odd do mercado para o empate,100.0
+4. Odds (média do mercado),odd_max_fora,Maior odd do mercado para o visitante,100.0
+4. Odds (média do mercado),odd_mais25,"Odd média de mais de 2,5 gols",100.0
+4. Odds (média do mercado),odd_menos25,"Odd média de menos de 2,5 gols",100.0
+4. Odds (média do mercado),odd_fech_casa,Odd de fechamento do mandante (a partir de 2019/20),39.5
+4. Odds (média do mercado),odd_fech_empate,Odd de fechamento do empate (a partir de 2019/20),39.5
+4. Odds (média do mercado),odd_fech_fora,Odd de fechamento do visitante (a partir de 2019/20),39.5
+4. Odds (média do mercado),odd_fech_mais25,"Odd de fechamento de mais de 2,5 gols (a partir de 2019/20)",39.5
+4. Odds (média do mercado),odd_fech_menos25,"Odd de fechamento de menos de 2,5 gols (a partir de 2019/20)",39.5
+5. Probabilidades implícitas (sem a margem da casa),prob_casa,Probabilidade de vitória do mandante,100.0
+5. Probabilidades implícitas (sem a margem da casa),prob_empate,Probabilidade de empate,100.0
+5. Probabilidades implícitas (sem a margem da casa),prob_fora,Probabilidade de vitória do visitante,100.0
+5. Probabilidades implícitas (sem a margem da casa),margem_1x2,Margem da casa no mercado de resultado (soma de 1/odd - 1),100.0
+5. Probabilidades implícitas (sem a margem da casa),prob_mais25,"Probabilidade de mais de 2,5 gols",100.0
+5. Probabilidades implícitas (sem a margem da casa),prob_menos25,"Probabilidade de menos de 2,5 gols",100.0
+5. Probabilidades implícitas (sem a margem da casa),margem_gols,Margem da casa no mercado de gols,100.0
+5. Probabilidades implícitas (sem a margem da casa),prob_fech_casa,Probabilidade de fechamento do mandante,39.5
+5. Probabilidades implícitas (sem a margem da casa),prob_fech_empate,Probabilidade de fechamento do empate,39.5
+5. Probabilidades implícitas (sem a margem da casa),prob_fech_fora,Probabilidade de fechamento do visitante,39.5
+5. Probabilidades implícitas (sem a margem da casa),margem_fech_1x2,Margem de fechamento no mercado de resultado,39.5
+5. Probabilidades implícitas (sem a margem da casa),prob_fech_mais25,"Probabilidade de fechamento de mais de 2,5 gols",39.5
+5. Probabilidades implícitas (sem a margem da casa),prob_fech_menos25,"Probabilidade de fechamento de menos de 2,5 gols",39.5
+5. Probabilidades implícitas (sem a margem da casa),margem_fech_gols,Margem de fechamento no mercado de gols,39.5
+6. Atributos — mercado x resultado,prob_resultado,Probabilidade que o mercado dava ao resultado ocorrido,100.0
+6. Atributos — mercado x resultado,surpresa_resultado,-ln(prob_resultado): quanto o resultado contrariou o mercado,100.0
+6. Atributos — mercado x resultado,surpresa_gols,"-ln(probabilidade do lado de 2,5 gols que ocorreu)",100.0
+6. Atributos — mercado x resultado,forca_mercado,prob_casa - prob_fora (> 0: mandante favorito),100.0
+6. Atributos — mercado x resultado,gols_esperados,Gols esperados pelo mercado (Poisson a partir de prob_mais25),100.0
+6. Atributos — mercado x resultado,desvio_gols,Gols reais - gols esperados,100.0
+6. Atributos — mercado x resultado,dispersao_odds,Odd máxima / odd média - 1 no resultado ocorrido,100.0
+6. Atributos — mercado x resultado,mov_casa,"Probabilidade de fechamento - abertura, mandante (2019/20+)",39.5
+6. Atributos — mercado x resultado,mov_fora,"Probabilidade de fechamento - abertura, visitante (2019/20+)",39.5
+6. Atributos — mercado x resultado,mov_mais25,"Probabilidade de fechamento - abertura, mais de 2,5 (2019/20+)",39.5
+7. Atributos — mercado x campo,dif_finalizacoes,Finalizações do mandante - do visitante,100.0
+7. Atributos — mercado x campo,dif_no_alvo,Finalizações no alvo do mandante - do visitante,100.0
+7. Atributos — mercado x campo,dif_escanteios,Escanteios do mandante - do visitante,100.0
+7. Atributos — mercado x campo,dominio_campo,Fração das finalizações no alvo feitas pelo mandante (0 a 1),100.0
+7. Atributos — mercado x campo,dominio_esperado,Domínio esperado pelo mercado: prob_casa / (prob_casa + prob_fora),100.0
+7. Atributos — mercado x campo,desencontro_dominio,dominio_campo - dominio_esperado,100.0
+7. Atributos — mercado x campo,vitoria_dominado,1 se o vencedor teve menos finalizações no alvo,100.0
+7. Atributos — mercado x campo,conversao,Gols / finalizações no alvo (as duas equipes),99.9
+8. Atributos — o próprio jogo,total_gols,Gols no jogo,100.0
+8. Atributos — o próprio jogo,gols_2t,Gols no 2º tempo,100.0
+8. Atributos — o próprio jogo,prop_gols_2t,Fração dos gols no 2º tempo,92.4
+8. Atributos — o próprio jogo,vantagem_perdida,1 se quem vencia no intervalo não venceu,100.0
+8. Atributos — o próprio jogo,virada,1 se quem vencia no intervalo perdeu,100.0
+8. Atributos — o próprio jogo,perda_vantagem,Saldo perdido no 2º tempo por quem vencia no intervalo,100.0
+8. Atributos — o próprio jogo,total_faltas,Faltas no jogo,100.0
+8. Atributos — o próprio jogo,total_cartoes,Cartões (amarelos + vermelhos) no jogo,100.0
+8. Atributos — o próprio jogo,total_vermelhos,Vermelhos no jogo,100.0
+8. Atributos — o próprio jogo,dif_cartoes,Cartões do mandante - do visitante,100.0
+8. Atributos — o próprio jogo,indice_disciplina,"Amarelos + 2,5 x vermelhos",100.0
+9. Atributos — contexto (antes do jogo),forma_casa,Pontos médios do mandante nos últimos 5 jogos da temporada,92.4
+9. Atributos — contexto (antes do jogo),forma_fora,Pontos médios do visitante nos últimos 5 jogos da temporada,92.4
+9. Atributos — contexto (antes do jogo),dif_forma,forma_casa - forma_fora,92.3
+9. Atributos — contexto (antes do jogo),ppj_casa,Pontos por jogo do mandante na temporada até o jogo,92.4
+9. Atributos — contexto (antes do jogo),ppj_fora,Pontos por jogo do visitante na temporada até o jogo,92.4
+9. Atributos — contexto (antes do jogo),saldo_casa,Saldo de gols médio do mandante nos últimos 5 jogos,92.4
+9. Atributos — contexto (antes do jogo),saldo_fora,Saldo de gols médio do visitante nos últimos 5 jogos,92.4
+9. Atributos — contexto (antes do jogo),posicao_casa,Posição do mandante na tabela antes do jogo,92.4
+9. Atributos — contexto (antes do jogo),posicao_fora,Posição do visitante na tabela antes do jogo,92.4
+9. Atributos — contexto (antes do jogo),posicao_rel_casa,"Posição relativa do mandante (0 = líder, 1 = último)",92.4
+9. Atributos — contexto (antes do jogo),posicao_rel_fora,"Posição relativa do visitante (0 = líder, 1 = último)",92.4
+9. Atributos — contexto (antes do jogo),dif_posicao,posicao_casa - posicao_fora (< 0: mandante mais bem colocado),92.3
+9. Atributos — contexto (antes do jogo),progresso,Fração da temporada já disputada (0 a 1),100.0
+9. Atributos — contexto (antes do jogo),reta_final,1 nos últimos 15% da temporada,100.0
+10. Matriz de detecção (z-score por liga e temporada),sem_odds_gols,"1 se a partida não tem odds de 2,5 gols",100.0
+10. Matriz de detecção (z-score por liga e temporada),z_surpresa_resultado,surpresa_resultado normalizada,100.0
+10. Matriz de detecção (z-score por liga e temporada),z_surpresa_gols,surpresa_gols normalizada,100.0
+10. Matriz de detecção (z-score por liga e temporada),z_desvio_gols,desvio_gols normalizado,100.0
+10. Matriz de detecção (z-score por liga e temporada),z_dispersao_odds,"dispersao_odds normalizada (limitada ao percentil 99,9)",100.0
+10. Matriz de detecção (z-score por liga e temporada),z_margem_1x2,margem_1x2 normalizada,100.0
+10. Matriz de detecção (z-score por liga e temporada),z_desencontro_dominio,desencontro_dominio normalizado,100.0
+10. Matriz de detecção (z-score por liga e temporada),z_conversao,conversao normalizada,100.0
+10. Matriz de detecção (z-score por liga e temporada),z_prop_gols_2t,prop_gols_2t normalizada,100.0
+10. Matriz de detecção (z-score por liga e temporada),z_perda_vantagem,perda_vantagem normalizada,100.0
+10. Matriz de detecção (z-score por liga e temporada),z_total_faltas,total_faltas normalizado,100.0
+10. Matriz de detecção (z-score por liga e temporada),z_indice_disciplina,indice_disciplina normalizado,100.0
+10. Matriz de detecção (z-score por liga e temporada),z_dif_cartoes,dif_cartoes normalizada,100.0
